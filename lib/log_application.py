@@ -2,7 +2,7 @@ import logging
 
 
 class LogApplication(object):
-    file_name = "log_file.log"
+    file_name = "lib/log_file.log"
     logging.basicConfig(filename=file_name, level=logging.INFO, format='%(asctime)s: %(message)s')
     logger = logging.getLogger(__name__)
 
@@ -17,7 +17,7 @@ class LogApplication(object):
         """
         Write a log in log file with class name
         """
-        self.logger.info(str(log_message) + " CLASS NAME : " + str(self.__class__.__name__))
+        self.logger.info("LOG MSG: "+str(log_message) + " CLASS NAME: " + str(self.__class__.__name__))
         return "Log message with class name wrote successfully"
 
     def read_log_message(self):
@@ -27,7 +27,11 @@ class LogApplication(object):
         log_read = open(self.file_name, "r")
         logs = log_read.read().split("\n")
         log_read.close()
-        return logs
+        log_msg = []
+        for i in logs:
+            if "LOG MSG: " in i:
+                log_msg.append(i)
+        return log_msg
 
     def read_log_messages_with_class_name_only(self):
         log_read = open(self.file_name, "r")
